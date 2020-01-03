@@ -1,0 +1,769 @@
+{
+  "openrpc": "1.0.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "Signatory Client",
+    "description": "Signatory lets you manage keys and sign transactions and messages offline for any EVM-based blockchain.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1920"
+    }
+  ],
+  "methods": [
+    {
+      "name": "listAccounts",
+      "summary": "Return the list of all not hidden (by default) accounts from the keystore",
+      "params": [],
+      "result": {
+        "name": "accounts",
+        "description": "List of all not hidden accounts",
+        "schema": {
+          "$ref": "#/components/schemas/Accounts"
+        }
+      }
+    },
+    {
+      "name": "hideAccount",
+      "summary": "Hide an account from the list returned by default by `signer_listAccounts`",
+      "params": [
+        {
+          "$ref": "#/components/contentDescriptors/Address"
+        }
+      ],
+      "result": {
+        "name": "hideAccountResult",
+        "description": "`true` if required account exists",
+        "schema": {
+          "$ref": "#/components/schemas/AccountExists"
+        }
+      }
+    },
+    {
+      "name": "unhideAccount",
+      "summary": "Show an account that was hidden before by the command `signer_hideAccount`",
+      "params": [
+        {
+          "$ref": "#/components/contentDescriptors/Address"
+        }
+      ],
+      "result": {
+        "name": "unhideAccountResult",
+        "description": "`accept` (Boolean) - `true` if required account exists",
+        "schema": {
+          "$ref": "#/components/schemas/AccountExists"
+        }
+      }
+    },
+    {
+      "name": "createAccount",
+      "summary": "Creates a new account and stores it locally as a passphrase-encoded keystore file.",
+      "params": [
+        {
+          "name": "newAccount",
+          "description": "Creates a new account and stores it locally as a passphrase-encoded keystore file.",
+          "schema": {
+            "title": "newAccount",
+            "type": "object",
+            "properties": {
+              "name": {
+                "title": "accountName",
+                "description": "account name",
+                "type": "string"
+              },
+              "description": {
+                "title": "accountDescription",
+                "description": "account description",
+                "type": "string"
+              },
+              "privateKey": {
+                "title": "privateKey",
+                "description": "optional private key field for importing",
+                "type": "string"
+              },
+              "passphrase": {
+                "name": "passphrase",
+                "description": "passphrase to keyfile",
+                "summary": "keyfile passphrase",
+                "schema": {
+                  "$ref": "#/components/schemas/Passphrase"
+                }
+              }
+            },
+            "required": [
+              "passphrase"
+            ]
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "$ref": "#/components/contentDescriptors/Address"
+      },
+      "examples": [
+        {
+          "name": "newAccountExample",
+          "description": "Example of creating a new account",
+          "params": [
+            {
+              "name": "testAccount",
+              "value": {
+                "name": "my test wallet",
+                "description": "my test wallet description",
+                "passphrase": "baz"
+              }
+            }
+          ],
+          "result": {
+            "name": "newAccountResultExample",
+            "value": "0x90ee510fb88ea47a84b45a6d983a0bc6b193e385"
+          }
+        }
+      ]
+    },
+    {
+      "name": "signTransaction",
+      "summary": "Signs transaction offline with private key from keystore file with given from address and passphrase.",
+      "params": [
+        {
+          "name": "transaction",
+          "description": "transaction to sign",
+          "summary": "transaction",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/Transaction"
+          }
+        },
+        {
+          "name": "passphrase",
+          "required": true,
+          "description": "passphrase to keyfile",
+          "summary": "keyfile passphrase",
+          "schema": {
+            "$ref": "#/components/schemas/Passphrase"
+          }
+        },
+        {
+          "name": "chainId",
+          "required": true,
+          "description": "chain id for the transaction",
+          "summary": "chain id for the transaction",
+          "schema": {
+            "$ref": "#/components/schemas/ChainId"
+          }
+        }
+      ],
+      "result": {
+        "name": "signedTransaction",
+        "description": "Hex-encoded signed raw transaction data",
+        "schema": {
+          "$ref": "#/components/schemas/HexString"
+        }
+      }
+    },
+    {
+      "name": "signTypedData",
+      "summary": "Signs v4 typed data with private key from keystore file with given from address and passphrase.",
+      "params": [
+        {
+          "name": "typedData",
+          "description": "typedData to sign",
+          "summary": "EIP 712 TypedData",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/SignedTypedData"
+          }
+        },
+        {
+          "name": "address",
+          "description": "address to send transaction to",
+          "summary": "Address to send transaction from",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/Address"
+          }
+        },
+        {
+          "name": "passphrase",
+          "required": true,
+          "description": "passphrase to keyfile",
+          "summary": "keyfile passphrase",
+          "schema": {
+            "$ref": "#/components/schemas/Passphrase"
+          }
+        },
+        {
+          "name": "chainId",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/ChainId"
+          }
+        }
+      ],
+      "result": {
+        "name": "signedTypedData",
+        "description": "Hex-encoded signed raw typed data",
+        "schema": {
+          "title": "signedTypedDataResult",
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/components/schemas/HexString"
+            },
+            "encodedData": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "signature",
+            "encodedData"
+          ]
+        }
+      }
+    },
+    {
+      "name": "importKeyfile",
+      "summary": "Import an account from Keyfile",
+      "description": "Import a new account from an external keyfile. should comply with the [Web3 Secret Storage Definition](https://github.com/ethereumproject/wiki/wiki/Web3-Secret-Storage-Definition)",
+      "params": [
+        {
+          "$ref": "#/components/contentDescriptors/Passphrase"
+        },
+        {
+          "$ref": "#/components/contentDescriptors/Keyfile"
+        }
+      ],
+      "result": {
+        "$ref": "#/components/contentDescriptors/Address"
+      }
+    },
+    {
+      "name": "generateMnemonic",
+      "summary": "Generate a mnemonic phrase",
+      "description": "Generates a new 24 words long mnemonic phrase",
+      "params": [],
+      "result": {
+        "name": "mnemonicPhrase",
+        "description": "Mnemonic phrase is a list of 24 words",
+        "schema": {
+          "$ref": "#/components/schemas/Mnemonic"
+        }
+      }
+    },
+    {
+      "name": "importMnemonic",
+      "summary": "Import a mnemonic phrase",
+      "description": "Creates a new account from a mnemonic and stores it locally as a passphrase-encoded keystore file.",
+      "params": [
+        {
+          "required": true,
+          "name": "importMnemonicOptions",
+          "schema": {
+            "title": "importMnemonicOptions",
+            "type": "object",
+            "required": [
+              "mnemonic",
+              "passphrase",
+              "hdPath"
+            ],
+            "properties": {
+              "mnemonic": {
+                "$ref": "#/components/schemas/Mnemonic"
+              },
+              "name": {
+                "title": "mnemonicName",
+                "type": "string"
+              },
+              "description": {
+                "title": "mnemonicDescription",
+                "type": "string"
+              },
+              "passphrase": {
+                "$ref": "#/components/schemas/Passphrase"
+              },
+              "hdPath": {
+                "title": "mnemonicHDPath",
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "uuidResult",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "importMnemonicExample",
+          "description": "example of importing a mnemonic phrase",
+          "params": [
+            {
+              "name": "importMnemonicOptionsExample",
+              "description": "example of import mnemonic options",
+              "value": {
+                "name": "my imported wallet",
+                "description": "my imported wallet description",
+                "passphrase": "baz",
+                "hdPath": "m/44/60/160720'/0",
+                "mnemonic": "icon suggest road current ripple engage spell clay route large arena climb oxygen electric cupboard dream title immune fit beyond mouse slab bronze salad"
+              }
+            }
+          ],
+          "result": {
+            "name": "importMnemonicResultExample",
+            "description": "example of import mnemonic result",
+            "value": "35ee9c7a-8ce5-48b7-80c3-7ad6602d43f4"
+          }
+        }
+      ]
+    },
+    {
+      "name": "getAccountFromMnemonic",
+      "summary": "Get account from mnemonic wallet",
+      "description": "Returns address of account computed from the HDWallet specified",
+      "params": [
+        {
+          "name": "accountFromMnemonicOptions",
+          "description": "mnemonic account generation options",
+          "required": true,
+          "schema": {
+            "title": "AccountMnemonicOptions",
+            "type": "object",
+            "properties": {
+              "uuid": {
+                "title": "uuid",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "passphrase": {
+                "title": "passphrase",
+                "schema": {
+                  "$ref": "#/components/schemas/Passphrase"
+                }
+              },
+              "index": {
+                "title": "index",
+                "schema": {
+                  "type": "number"
+                }
+              }
+            },
+            "required": [
+              "uuid",
+              "passphrase"
+            ]
+          }
+        }
+      ],
+      "result": {
+        "$ref": "#/components/contentDescriptors/Address"
+      },
+      "examples": [
+        {
+          "name": "accountFromMnemonicExample",
+          "description": "example of importing a mnemonic phrase",
+          "params": [
+            {
+              "name": "importMnemonicOptionsExample",
+              "description": "example of import mnemonic options",
+              "value": {
+                "name": "my imported wallet",
+                "description": "my imported wallet description",
+                "passphrase": "baz",
+                "hdPath": "m/44/60/160720/0",
+                "mnemonic": "icon suggest road current ripple engage spell clay route large arena climb oxygen electric cupboard dream title immune fit beyond mouse slab bronze salad"
+              }
+            }
+          ],
+          "result": {
+            "name": "importMnemonicResultExample",
+            "description": "example of import mnemonic result",
+            "value": "0xa0dfb14b391590faff0d6b37bf2916f27cd15a28"
+          }
+        }
+      ]
+    },
+    {
+      "name": "exportAccount",
+      "summary": "Export an account",
+      "description": "Export a keyfile associated with account. Keyfile uses the [Web3 Secret Storage Definition](https://github.com/ethereumproject/wiki/wiki/Web3-Secret-Storage-Definition)",
+      "params": [
+        {
+          "$ref": "#/components/contentDescriptors/Address"
+        }
+      ],
+      "result": {
+        "$ref": "#/components/contentDescriptors/Keyfile"
+      }
+    },
+    {
+      "name": "sign",
+      "summary": "Sign a message",
+      "description": "Calculates an Ethereum-specific signature in the form of keccak256(\"\\x19Ethereum Signed Message:\n\" + len(message) + message))",
+      "params": [
+        {
+          "name": "dataToSign",
+          "description": "data to sign",
+          "summary": "sign data",
+          "schema": {
+            "$ref": "#/components/schemas/HexString"
+          },
+          "required": true
+        },
+        {
+          "name": "address",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/Address"
+          }
+        },
+        {
+          "name": "passphrase",
+          "description": "passphrase to keyfile",
+          "schema": {
+            "$ref": "#/components/schemas/Passphrase"
+          },
+          "required": true
+        },
+        {
+          "name": "chainId",
+          "required": true,
+          "description": "chain id for the transaction",
+          "summary": "chain id for the transaction",
+          "schema": {
+            "$ref": "#/components/schemas/ChainId"
+          }
+        }
+      ],
+      "result": {
+        "name": "signedMessageData",
+        "description": "signature hash of the provided data",
+        "schema": {
+          "$ref": "#/components/schemas/HexString"
+        }
+      }
+    }
+  ],
+  "components": {
+    "schemas": {
+      "AccountExists": {
+        "title": "AccountExists",
+        "type": "boolean"
+      },
+      "Address": {
+        "title": "address",
+        "type": "string",
+        "pattern": "^0x[a-fA-F\\d]{40}$"
+      },
+      "Additional": {
+        "title": "additionalParams",
+        "type": "object",
+        "properties": {
+          "chainId": {
+            "title": "chainId",
+            "description": "Chain id number, by default for mainnet it equals 61.",
+            "type": "integer"
+          },
+          "show_hidden": {
+            "title": "showHidden",
+            "description": "show hidden accounts",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "chainId"
+        ]
+      },
+      "Account": {
+        "title": "Account",
+        "type": "object",
+        "required": [
+          "address"
+        ],
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "name": {
+            "title": "accountName",
+            "type": "string"
+          },
+          "description": {
+            "title": "accountDescription",
+            "type": "string"
+          },
+          "is_hidden": {
+            "title": "accountIsHidden",
+            "type": "boolean"
+          }
+        }
+      },
+      "Accounts": {
+        "title": "accounts",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Account"
+        }
+      },
+      "ChainId": {
+        "title": "chainId",
+        "type": "integer"
+      },
+      "HexString": {
+        "title": "hexString",
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]+$"
+      },
+      "Keyfile": {
+        "title": "keyfile",
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "integer"
+          },
+          "id": {
+            "type": "string"
+          },
+          "crypto": {
+            "title": "crypto",
+            "type": "object",
+            "properties": {
+              "ciphertext": {
+                "type": "string"
+              },
+              "cipherparams": {
+                "type": "object",
+                "properties": {
+                  "iv": {
+                    "title": "iv",
+                    "type": "string"
+                  }
+                }
+              },
+              "cipher": {
+                "type": "string"
+              },
+              "kdf": {
+                "type": "string"
+              },
+              "kdfparams": {
+                "type": "object",
+                "properties": {
+                  "dklen": {
+                    "title": "dklen",
+                    "type": "integer"
+                  },
+                  "salt": {
+                    "type": "string"
+                  },
+                  "n": {
+                    "type": "integer"
+                  },
+                  "r": {
+                    "type": "integer"
+                  },
+                  "p": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "dklen",
+                  "salt",
+                  "n",
+                  "r",
+                  "p"
+                ]
+              },
+              "mac": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kdfparams",
+              "kdf",
+              "cipher",
+              "cipherparams",
+              "ciphertext",
+              "mac"
+            ]
+          }
+        },
+        "required": [
+          "crypto",
+          "id",
+          "version"
+        ]
+      },
+      "Nonce": {
+        "title": "nonce",
+        "description": "A number only to be used once",
+        "pattern": "^0x[a-fA-F0-9]+$",
+        "type": "string"
+      },
+      "Mnemonic": {
+        "title": "mnemonic",
+        "type": "string",
+        "description": "a list of 24 words"
+      },
+      "Passphrase": {
+        "title": "passphrase",
+        "description": "passphrase used to encode keyfile (recommend to use 8+ words with good entropy)",
+        "type": "string"
+      },
+      "SignedTypedData": {
+        "title": "SignedTypedData",
+        "type": "object",
+        "properties": {
+          "types": {
+            "type": "object",
+            "title": "types",
+            "properties": {
+              "EIP712Domain": {
+                "title": "eip712Domain",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TypedData"
+                }
+              }
+            },
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TypedData"
+              }
+            },
+            "required": [
+              "EIP712Domain"
+            ]
+          },
+          "primaryType": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "object"
+          },
+          "message": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "types",
+          "primaryType",
+          "domain",
+          "message"
+        ]
+      },
+      "Transaction": {
+        "title": "transaction",
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "gas",
+          "gasPrice",
+          "nonce"
+        ],
+        "properties": {
+          "from": {
+            "description": "Address of the sender",
+            "$ref": "#/components/schemas/Address"
+          },
+          "gas": {
+            "title": "gas",
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]+$",
+            "description": "The gas limit provided by the sender in Wei"
+          },
+          "gasPrice": {
+            "title": "gasPrice",
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]+$",
+            "description": "The gas price willing to be paid by the sender in Wei"
+          },
+          "data": {
+            "title": "data",
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]+$",
+            "description": "The data field sent with the transaction"
+          },
+          "nonce": {
+            "title": "nonce",
+            "description": "The total number of prior transactions made by the sender",
+            "$ref": "#/components/schemas/Nonce"
+          },
+          "to": {
+            "description": "address of the receiver. null when its a contract creation transaction",
+            "$ref": "#/components/schemas/Address"
+          },
+          "value": {
+            "description": "Value of Ether being transferred in Wei",
+            "$ref": "#/components/schemas/Wei"
+          }
+        }
+      },
+      "TypedData": {
+        "title": "TypedData",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "Wei": {
+        "title": "wei",
+        "type": "string",
+        "description": "Hex representation of Wei",
+        "pattern": "^0x[a-fA-F0-9]+$"
+      }
+    },
+    "contentDescriptors": {
+      "Address": {
+        "name": "address",
+        "summary": "Account address",
+        "required": true,
+        "description": "hex-encoded 20 bytes public address",
+        "schema": {
+          "$ref": "#/components/schemas/Address"
+        }
+      },
+      "Additional": {
+        "name": "additional",
+        "summary": "additional params",
+        "description": "additional list of parameters to define network or account specific options",
+        "schema": {
+          "$ref": "#/components/schemas/Additional"
+        }
+      },
+      "Keyfile": {
+        "name": "keyfile",
+        "required": true,
+        "summary": "keyfile - secret storage",
+        "description": "keyfile in json format that MUST comply with the [Web3 Secret Storage Definition](https://github.com/ethereumproject/wiki/wiki/Web3-Secret-Storage-Definition)",
+        "schema": {
+          "$ref": "#/components/schemas/Keyfile"
+        }
+      },
+      "Passphrase": {
+        "name": "passphrase",
+        "required": true,
+        "summary": "keyfile - passphrase",
+        "description": "passphrase to unlock keyfile storage",
+        "schema": {
+          "$ref": "#/components/schemas/Passphrase"
+        }
+      }
+    }
+  }
+}

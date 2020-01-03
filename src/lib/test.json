@@ -1,0 +1,4 @@
+const mathContract = new MathContract()
+
+const bytesToSendWithSendTransaction = mathContract.increment(5, priv_key=mypriv);
+jsonRPCClient.eth_sendTransaction(bytesToSendTransaction);

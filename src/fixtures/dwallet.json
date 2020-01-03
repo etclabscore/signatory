@@ -1,0 +1,27 @@
+{
+  "type": "deterministic",
+  "keystore": {
+    "version": 3,
+    "id": "c42df3fa-55f7-4c0c-aa89-f6a3cd1ae83e",
+    "crypto": {
+      "ciphertext": "827dce9fa0648292c97dd89502a33d6ed6a745f497d8a7c82cc6751245e54e423c6cd5dbd60831a709746b85290d95bdf95e8ecb03c930066cc4225e24e40afa",
+      "cipherparams": {
+        "iv": "e65f9a596b0b6a7f0868abc4a070cb2d"
+      },
+      "cipher": "aes-128-ctr",
+      "kdf": "scrypt",
+      "kdfparams": {
+        "dklen": 32,
+        "salt": "06b10a82c5e4eaf0e4863849ad4f8a18b4d9cfba57d719dfadf0251043be9ac5",
+        "n": 262144,
+        "r": 8,
+        "p": 1
+      },
+      "mac": "3f9c95e26a1f173082c9ed54d8525290fd26ea14db5407120b249e44dc833040"
+    }
+  },
+  "uuid": "2512ea75-3299-4975-afa0-005c481fb908",
+  "hdPath": "m/44'/60'/0'",
+  "nextAccount": 0,
+  "visible": true
+}
