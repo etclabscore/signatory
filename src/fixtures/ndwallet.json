@@ -1,0 +1,27 @@
+{
+  "type": "non-deterministic",
+  "keystore": {
+    "version": 3,
+    "id": "4fc66ace-7cd6-4a45-8a0a-43ce466cf0c1",
+    "crypto": {
+      "ciphertext": "475680187806b6b675d09f783102b3f04755cce14a418fc7515263da2a65e281",
+      "cipherparams": {
+        "iv": "c69e8e734a9ad66ffff28b8a5682301a"
+      },
+      "cipher": "aes-128-ctr",
+      "kdf": "scrypt",
+      "kdfparams": {
+        "dklen": 32,
+        "salt": "15562cd962eadb0d672eb024b886404c2403d3bda1ffb6fb224baecb326cfd79",
+        "n": 262144,
+        "r": 8,
+        "p": 1
+      },
+      "mac": "c6ae66040969a6ca54ac801578118ef1b5a55395f078cc1c31a74ceb8f95d98c"
+    }
+  },
+  "uuid": "0a5356b7-b8f6-42e0-9a3d-1e1a08276d11",
+  "address": "0x14c83be0e6f4e7a1ead6e9075bd0ee971020814e",
+  "parent": "2512ea75-3299-4975-afa0-005c481fb908",
+  "visible": true
+}
