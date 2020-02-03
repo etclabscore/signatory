@@ -368,24 +368,21 @@
       },
       "examples": [
         {
-          "name": "accountFromMnemonicExample",
+          "name": "getAccountFromMnemonicExample",
           "description": "example of importing a mnemonic phrase",
           "params": [
             {
-              "name": "importMnemonicOptionsExample",
-              "description": "example of import mnemonic options",
+              "name": "accountFromMnemonicOptions",
+              "description": "example of get mnemonic account",
               "value": {
-                "name": "my imported wallet",
-                "description": "my imported wallet description",
-                "passphrase": "baz",
-                "hdPath": "m/44/60/160720/0",
-                "mnemonic": "icon suggest road current ripple engage spell clay route large arena climb oxygen electric cupboard dream title immune fit beyond mouse slab bronze salad"
+                "uuid": "35ee9c7a-8ce5-48b7-80c3-7ad6602d43f4",
+                "passphrase": "baz"
               }
             }
           ],
           "result": {
-            "name": "importMnemonicResultExample",
-            "description": "example of import mnemonic result",
+            "name": "getAccountFromMnemonicResultExample",
+            "description": "example of get account from mnemonic result",
             "value": "0xa0dfb14b391590faff0d6b37bf2916f27cd15a28"
           }
         }

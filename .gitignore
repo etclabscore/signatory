@@ -7,3 +7,5 @@ docs
 dist
 /**/build
 fixtures/generated-clients
+generated-client/
+signatory/
