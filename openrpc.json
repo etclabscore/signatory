@@ -446,7 +446,36 @@
         "schema": {
           "$ref": "#/components/schemas/HexString"
         }
-      }
+      },
+      "examples": [
+        {
+          "name": "signMessageExample",
+          "params": [
+            {
+              "name": "dataToSign",
+              "value": "0x74657374"
+            },
+            {
+              "name": "address",
+              "value": "0x90ee510fb88ea47a84b45a6d983a0bc6b193e385"
+
+            },
+            {
+              "name": "passphrase",
+              "value": "baz"
+            },
+            {
+              "name": "chainId",
+              "value": 61
+            }
+          ],
+          "result": {
+            "name": "signMessageResultExample",
+            "description": "The signed message",
+            "value": "0xb93eaad09a1ce33bf9b500a73be6faf5d2d4816a563f4ebce0f14f9e38e9583640163b319ccc33a84a435799226438f2376ec851ea82aa49b34675ac8c6fc1039e"
+          }
+        }
+      ]
     }
   ],
   "components": {
