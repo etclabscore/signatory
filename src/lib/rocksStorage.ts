@@ -1,4 +1,4 @@
-import { Storage, AccountStorageData } from "./storage";
+import { Storage, AccountStorageData, AccountMetadata } from "./storage";
 import { WalletType, NonDeterministicWallet, DeterministicWallet } from "./wallet";
 import * as ethUtil from "ethereumjs-util";
 import RocksDB from "rocksdb";
@@ -61,27 +61,33 @@ export class RocksStorage implements Storage {
     }
   }
 
-  public async listWallets(type: WalletType): Promise<string[]> {
-    const walletIdentifiers: string[] = [];
+  public async listWallets(type: WalletType, hidden: boolean): Promise<AccountMetadata[]> {
+    const walletIdentifiers: AccountMetadata[] = [];
     const iter = this.db.iterator();
-    while (iter.finished === false) {
+    while (true) {
       const result = await this.next(iter);
+      if (result.key === undefined) {
+        this.end(iter);
+        return walletIdentifiers;
+      }
       if (result.key && result.value) {
         const storageData = JSON.parse(result.value) as AccountStorageData;
-        if (storageData.type === type && storageData.visible) {
+        if (storageData.type === type && (storageData.visible || hidden)) {
+          const { name, description, visible } = storageData;
           switch (storageData.type) {
             case "deterministic":
-              walletIdentifiers.push(storageData.uuid);
+              const { uuid, hdPath } = storageData;
+              walletIdentifiers.push({ uuid, name, description, type: storageData.type, hdPath, hidden: !visible });
               break;
             case "non-deterministic":
-              walletIdentifiers.push(storageData.address);
+              const { address, parent } = storageData;
+              walletIdentifiers.push({ address, parent, name, description, type: storageData.type, hidden: !visible });
               break;
           }
         }
       }
     }
-    await this.end(iter);
-    return walletIdentifiers;
+
   }
 
   private next(it: RocksDB.Iterator): Promise<any> {
@@ -123,7 +129,7 @@ export class RocksStorage implements Storage {
 
   private async storeData(key: RocksDB.Bytes, value: RocksDB.Bytes): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.db.put(key, value, (err) => {
+      this.db.put(key, value, { sync: true }, (err) => {
         if (err) {
           reject(err);
           return;

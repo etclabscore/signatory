@@ -20,6 +20,8 @@
       "mac": "cf4ee0ff9b6b034225ebe6c6da79efbbb23d43aa5f9b0327c2bc148d128ad0fb"
     }
   },
+  "name": "testname",
+  "description": "testdesc",
   "uuid": "222fae48-02fd-43f2-b203-776ea4b918fb",
   "hdPath": "m/44'/60'/0'/0/0",
   "nextAccount": 0,

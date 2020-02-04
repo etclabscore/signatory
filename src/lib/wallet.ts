@@ -23,6 +23,25 @@ export interface AccountData {
   privateKey?: Buffer;
 }
 
+export interface AccountInfo extends Metadata {
+  address: string;
+  type: "non-deterministic";
+  parent?: string;
+}
+
+export interface WalletInfo extends Metadata {
+  uuid: string;
+  type: "deterministic";
+  hdPath: string;
+}
+
+export interface Metadata {
+  name?: string;
+  description?: string;
+  type: WalletType;
+  hidden: boolean;
+}
+
 export interface NonDeterministicWallet extends SignatoryWallet {
   type: "non-deterministic";
   address: string;

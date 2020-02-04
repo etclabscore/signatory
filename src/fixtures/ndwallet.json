@@ -20,6 +20,8 @@
       "mac": "c6ae66040969a6ca54ac801578118ef1b5a55395f078cc1c31a74ceb8f95d98c"
     }
   },
+  "description": "testdesc",
+  "name": "testname",
   "uuid": "0a5356b7-b8f6-42e0-9a3d-1e1a08276d11",
   "address": "0x14c83be0e6f4e7a1ead6e9075bd0ee971020814e",
   "parent": "2512ea75-3299-4975-afa0-005c481fb908",

@@ -62,6 +62,7 @@ describe("Integration test for signatory server", () => {
       passphrase: "testtest",
       mnemonic,
     });
+
     expect(mnemonic).toBeDefined();
     const generateAccountFromMnemonic = async (index: number, id: string) => {
       return client.getAccountFromMnemonic({
@@ -78,7 +79,9 @@ describe("Integration test for signatory server", () => {
     await client.hideAccount(address0);
     await client.hideAccount(address1);
     await client.hideAccount(address00);
-  });
+    const wallets = await client.listWallets(true);
+    expect(wallets.length).toEqual(1);
+  }, 10000);
 
   it("should create account ,  export and  import a keyfile", async () => {
 
@@ -97,12 +100,14 @@ describe("Integration test for signatory server", () => {
     await client.hideAccount(address);
     addresses = await client.listAccounts();
     expect(addresses.length).toBe(0);
+    addresses = await client.listAccounts(true);
+    expect(addresses.length).toBe(1);
     await client.unhideAccount(address);
     addresses = await client.listAccounts();
     expect(addresses.length).toBe(1);
     await client.hideAccount(address);
 
-  });
+  }, 10000);
 
   it("should create an account and sign data with the account", async () => {
     const address = await client.createAccount({
@@ -126,6 +131,6 @@ describe("Integration test for signatory server", () => {
     const signTypedData = await client.signTypedData(testTypedData, address, "testtest", 6);
     expect(signTypedData.signature).toBeDefined();
     expect(signTypedData.encodedData).toBeDefined();
-  });
+  }, 10000);
 
 });

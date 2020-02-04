@@ -1,6 +1,6 @@
 import { methods, SignatoryMethodMapping } from "./index";
 import { MemoryStorage } from "../lib/memoryStorage";
-import { DEFAULT_HD_PATH } from "../lib/wallet";
+import { DEFAULT_HD_PATH, AccountInfo } from "../lib/wallet";
 import { NonDeterministicWallet, DeterministicWallet } from "../lib/wallet";
 import * as wallet from "../lib/wallet";
 import dWallet from "../fixtures/wallet.json";
@@ -13,7 +13,6 @@ import * as ethTx from "ethereumjs-tx";
 import * as types from "../generated-types";
 import * as rlp from "rlp";
 import ethCommon from "ethereumjs-common";
-import { randomBytes } from "crypto";
 // tslint:disable-next-line:no-var-requires
 const sigUtil = require("eth-sig-util");
 
@@ -48,13 +47,19 @@ describe("Methods for handling signatory request", () => {
     expect(accts[0].address).toEqual(dummyAccount.address);
   });
 
+  it("should listWallets", async () => {
+    const wallets = await handlers.listWallets();
+    expect(wallets.length).toEqual(1);
+    expect(wallets[0].uuid).toEqual(dummyHDAccount.uuid);
+  });
+
   it("should createAccount", async () => {
     jest.spyOn(wallet, "createNonDeterministicWallet").mockReturnValue(dummyAccount);
     const createAccountHandler = methods(new MemoryStorage());
     const address = await createAccountHandler.createAccount({ passphrase: "testtestt" });
-    const wallets = await memoryStorage.listWallets("non-deterministic");
+    const wallets = await memoryStorage.listWallets("non-deterministic", false) as AccountInfo[];
     expect(wallets.length).toEqual(1);
-    expect(wallets[0]).toEqual(address);
+    expect(wallets[0].address).toEqual(address);
   });
 
   it("should generateMnemonic", async () => {
