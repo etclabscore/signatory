@@ -2,7 +2,7 @@
   "openrpc": "1.0.0",
   "info": {
     "version": "0.1.0",
-    "title": "Signatory JSON-RPC API",
+    "title": "Signatory",
     "description": "🔏Signatory is a transaction and message signer for the Ethereum Stack.",
     "license": {
       "name": "Apache 2.0",
