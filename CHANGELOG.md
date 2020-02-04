@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/etclabscore/signatory/compare/1.0.0...1.0.1) (2020-02-04)
+
+
+### Bug Fixes
+
+* add bin to package.json and lint ([34f5fe7](https://github.com/etclabscore/signatory/commit/34f5fe7a631861a7a32384242dff4ebbaa2e8033))
+
 # 1.0.0 (2020-02-04)
 
 
