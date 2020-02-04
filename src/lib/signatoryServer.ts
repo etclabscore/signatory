@@ -24,7 +24,7 @@ export class SignatoryServer {
   }
 
   /**
-   * start - Launches the service runner
+   * start - Launches signatory
    */
   public async start() {
     await this.storage.open();

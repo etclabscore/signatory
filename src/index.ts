@@ -2,7 +2,7 @@ import { makeLogger } from "./lib/logging";
 import { SignatoryServer } from "./lib/signatoryServer";
 import { Storage } from "./lib/storage";
 export { getLogStream } from "./lib/logging";
-const logger = makeLogger("ServiceRunner", "startServiceRunner");
+const logger = makeLogger("Signatory", "startSignatory");
 /**
  *
  * @param dir - where signatures should live

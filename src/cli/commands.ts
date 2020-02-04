@@ -5,7 +5,7 @@ import { Command } from "commander";
 import { startSignatory } from "..";
 import { SignatoryServer } from "../lib/signatoryServer";
 import { RocksStorage } from "../lib/rocksStorage";
-const logger = makeLogger("ServiceRunner", "Commands");
+const logger = makeLogger("Signatory", "Commands");
 
 interface ParsedCommands {
   port: string;

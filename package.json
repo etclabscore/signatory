@@ -16,6 +16,9 @@
     "clean": "npm uninstall @etclabscore/signatory-client",
     "test": "npm run lint && npm run build && jest --coverage"
   },
+  "bin": {
+    "signatory": "./build/src/cli/index.js"
+  },
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
