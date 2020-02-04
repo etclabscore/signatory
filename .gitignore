@@ -1,4 +1,4 @@
-signatory-client.tgz
+*.tgz
 node_modules
 coverage
 build

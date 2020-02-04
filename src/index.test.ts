@@ -24,7 +24,7 @@ const getFreePort = (): Promise<number> => {
 
 describe("Integration test for signatory server", () => {
 
-  let client: signatory.SignatoryClient;
+  let client: signatory.Signatory;
   let server: SignatoryServer;
   let serverDir: string;
   let storage: RocksStorage;
@@ -35,7 +35,7 @@ describe("Integration test for signatory server", () => {
     serverDir = await fs.mkdtemp("test-signatory");
     storage = new RocksStorage(serverDir);
     server = await startSignatory(storage, `${serverPort}`);
-    client = new signatory.SignatoryClient({
+    client = new signatory.Signatory({
       transport: {
         host: "localhost",
         port: serverPort,
