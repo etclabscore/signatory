@@ -2,8 +2,8 @@
   "openrpc": "1.0.0",
   "info": {
     "version": "0.1.0",
-    "title": "Signatory Client",
-    "description": "Signatory lets you manage keys and sign transactions and messages offline for any EVM-based blockchain.",
+    "title": "Signatory JSON-RPC API",
+    "description": "🔏Signatory is a transaction and message signer for the Ethereum Stack.",
     "license": {
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
