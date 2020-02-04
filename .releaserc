@@ -10,20 +10,15 @@
     "@semantic-release/npm"
   ],
   "verifyConditions": [
+    [ "@semantic-release/exec", { "verifyCmd": "./verifyConditions.sh", "env": {} } ],
     "@semantic-release/changelog",
     "@semantic-release/npm",
     "@semantic-release/git",
     "@semantic-release/github",
-    "@qiwi/semantic-release-gh-pages-plugin"
   ],
   "publish": [
+    [ "@semantic-release/exec", { "publishCmd": "./publish.sh" } ],
     "@semantic-release/github",
-    {
-      "path": "@qiwi/semantic-release-gh-pages-plugin",
-      "msg": "github pages release",
-      "src": "docs/",
-      "branch": "gh-pages"
-    },
     "@semantic-release/npm"
   ],
   "success": [
