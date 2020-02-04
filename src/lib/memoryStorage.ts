@@ -1,4 +1,4 @@
-import { Storage, AccountStorageData } from "./storage";
+import { Storage, AccountStorageData, AccountMetadata } from "./storage";
 import { WalletType, DeterministicWallet, NonDeterministicWallet } from "./wallet";
 export class MemoryStorage implements Storage {
   public storage: { [key: string]: string; };
@@ -36,15 +36,18 @@ export class MemoryStorage implements Storage {
     return Promise.resolve(wallet);
   }
 
-  public listWallets(type: WalletType): Promise<string[]> {
+  public listWallets(type: WalletType, hidden: boolean): Promise<AccountMetadata[]> {
     const wallets = Object.keys(this.storage).map((key) => JSON.parse(this.storage[key]) as AccountStorageData);
-    const filteredWallets = wallets.filter((wallet) => wallet.type === type && wallet.visible);
+    const filteredWallets = wallets.filter((wallet) => wallet.type === type && (wallet.visible || hidden));
     return Promise.resolve(filteredWallets.map((wallet) => {
+      const { name, description, visible } = wallet;
       switch (wallet.type) {
         case "non-deterministic":
-          return wallet.address;
+          const { address, parent } = wallet;
+          return { address, parent, name, description, type: wallet.type, hidden: !visible };
         case "deterministic":
-          return wallet.uuid;
+          const { uuid, hdPath } = wallet;
+          return { uuid, name, description, hdPath, type: wallet.type, hidden: !visible };
       }
     }));
   }

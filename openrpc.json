@@ -11,19 +11,39 @@
   },
   "servers": [
     {
-      "url": "http://localhost:1920"
+      "url": "http://localhost:1999"
     }
   ],
   "methods": [
     {
       "name": "listAccounts",
       "summary": "Return the list of all not hidden (by default) accounts from the keystore",
-      "params": [],
+      "params": [
+        {
+          "$ref": "#/components/contentDescriptors/Hidden"
+        }
+      ],
       "result": {
         "name": "accounts",
-        "description": "List of all not hidden accounts",
+        "description": "List of accounts according to flag",
         "schema": {
           "$ref": "#/components/schemas/Accounts"
+        }
+      }
+    },
+    {
+      "name": "listWallets",
+      "summary": "Return the list of all not hidden (by default) wallets from the keystore",
+      "params": [
+        {
+          "$ref": "#/components/contentDescriptors/Hidden"
+        }
+      ],
+      "result": {
+        "name": "wallets",
+        "description": "List of all wallets according to hidden flag",
+        "schema": {
+          "$ref": "#/components/schemas/Wallets"
         }
       }
     },
@@ -458,7 +478,6 @@
             {
               "name": "address",
               "value": "0x90ee510fb88ea47a84b45a6d983a0bc6b193e385"
-
             },
             {
               "name": "passphrase",
@@ -512,7 +531,8 @@
         "title": "Account",
         "type": "object",
         "required": [
-          "address"
+          "address",
+          "hidden"
         ],
         "properties": {
           "address": {
@@ -526,9 +546,8 @@
             "title": "accountDescription",
             "type": "string"
           },
-          "is_hidden": {
-            "title": "accountIsHidden",
-            "type": "boolean"
+          "hidden": {
+            "$ref": "#/components/schemas/Hidden"
           }
         }
       },
@@ -547,6 +566,10 @@
         "title": "hexString",
         "type": "string",
         "pattern": "^0x[a-fA-F0-9]+$"
+      },
+      "Hidden": {
+        "title": "hidden",
+        "type": "boolean"
       },
       "Keyfile": {
         "title": "keyfile",
@@ -747,6 +770,47 @@
           }
         }
       },
+      "UUID": {
+        "title": "uuid",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      },
+      "Wallet": {
+        "title": "Wallet",
+        "type": "object",
+        "required": [
+          "uuid",
+          "hdPath",
+          "hidden"
+        ],
+        "properties": {
+          "uuid": {
+            "$ref": "#/components/schemas/UUID"
+          },
+          "name": {
+            "title": "walletName",
+            "type": "string"
+          },
+          "description": {
+            "title": "walletDescription",
+            "type": "string"
+          },
+          "hdPath": {
+            "title": "hdPath",
+            "type": "string"
+          },
+          "hidden": {
+            "$ref": "#/components/schemas/Hidden"
+          }
+        }
+      },
+      "Wallets": {
+        "title": "wallets",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Wallet"
+        }
+      },
       "Wei": {
         "title": "wei",
         "type": "string",
@@ -772,6 +836,14 @@
           "$ref": "#/components/schemas/Additional"
         }
       },
+      "Hidden": {
+        "name": "hidden",
+        "summary": "visible flag parameter",
+        "description": "A parameter to hide or show an account or feature",
+        "schema": {
+          "$ref": "#/components/schemas/Hidden"
+        }
+      },
       "Keyfile": {
         "name": "keyfile",
         "required": true,
@@ -788,6 +860,15 @@
         "description": "passphrase to unlock keyfile storage",
         "schema": {
           "$ref": "#/components/schemas/Passphrase"
+        }
+      },
+      "UUID": {
+        "name": "uuid",
+        "summary": "UUIDv4 idenitifer for wallet",
+        "required": true,
+        "description": "UUIDv4 identifier for HD wallet",
+        "schema": {
+          "$ref": "#/components/schemas/UUID"
         }
       }
     }

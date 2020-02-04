@@ -5,7 +5,7 @@ import { makeLogger } from "../lib/logging";
 import { IMethodMapping } from "@open-rpc/server-js/build/router";
 import * as types from "../generated-types";
 import { Storage } from "../lib/storage";
-import { createNonDeterministicWallet } from "../lib/wallet";
+import { createNonDeterministicWallet, AccountInfo, WalletInfo } from "../lib/wallet";
 import * as account from "../lib/wallet";
 import Wallet, { V3Keystore } from "@etclabscore/ethereumjs-wallet";
 import * as bip39 from "bip39";
@@ -15,6 +15,7 @@ const logger = makeLogger("Signatory", "Methods");
 
 export interface SignatoryMethodMapping extends IMethodMapping {
   listAccounts: types.ListAccounts;
+  listWallets: types.ListWallets;
   createAccount: types.CreateAccount;
   hideAccount: types.HideAccount;
   unhideAccount: types.UnhideAccount;
@@ -37,10 +38,20 @@ export const methods = (storage: Storage): SignatoryMethodMapping => {
 
   return {
 
-    listAccounts: async () => {
-      const wallets = await storage.listWallets("non-deterministic");
-      return wallets.map((address: string) => {
-        return { address };
+    listAccounts: async (hidden?: types.Hidden) => {
+      const isHidden = hidden || false;
+      const wallets = await storage.listWallets("non-deterministic", isHidden) as AccountInfo[];
+      return wallets.map((metadata) => {
+        const { address, name, description, parent } = metadata;
+        return { address, name, description, parent, hidden: metadata.hidden };
+      });
+    },
+    listWallets: async (hidden?: types.Hidden) => {
+      const isHidden = hidden || false;
+      const wallets = await storage.listWallets("deterministic", isHidden) as WalletInfo[];
+      return wallets.map((metadata) => {
+        const { uuid, name, description, hdPath } = metadata;
+        return { uuid, name, description, hdPath, hidden: metadata.hidden };
       });
     },
 

@@ -16,7 +16,7 @@ program
   .option(
     "-p, --port <port>",
     "Set port for Signatory",
-    "8002",
+    "1999",
   )
   .action(async () => {
     try {

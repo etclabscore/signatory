@@ -1,11 +1,10 @@
-import Wallet, { V3Keystore } from "@etclabscore/ethereumjs-wallet";
-import uuidV4 from "uuid/v4";
-import { randomBytes } from "crypto";
-import { DeterministicWallet, NonDeterministicWallet, WalletType } from "./wallet";
+import { DeterministicWallet, NonDeterministicWallet, WalletType, AccountInfo, WalletInfo } from "./wallet";
 /**
  * AccountStorageData - is an interface to describe the basic storage data type storing privateKey and encryption version string
  */
 export type AccountStorageData = DeterministicWallet | NonDeterministicWallet;
+
+export type AccountMetadata = AccountInfo | WalletInfo;
 /**
  * Storage - is an interface to describe the basic storage functionality for signatory
  */
@@ -36,5 +35,5 @@ export interface Storage {
    * listAccounts - returns an array of "0x" Ethereum addresses
    * @returns array of Ethereum addresses;
    */
-  listWallets: (type: WalletType) => Promise<string[]>;
+  listWallets: (type: WalletType, visible: boolean) => Promise<AccountMetadata[]>;
 }

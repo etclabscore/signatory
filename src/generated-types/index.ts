@@ -1,3 +1,4 @@
+export type Hidden = boolean;
 export type Address = string;
 export type AccountName = string;
 export type AccountDescription = string;
@@ -132,7 +133,7 @@ export interface ImportMnemonicOptions {
   hdPath: MnemonicHDPath;
   [k: string]: any;
 }
-export type Uuid = any;
+export type Uuid = string;
 export type Index = any;
 export interface AccountMnemonicOptions {
   uuid: Uuid;
@@ -141,15 +142,26 @@ export interface AccountMnemonicOptions {
   [k: string]: any;
 }
 export type HexString = string;
-export type AccountIsHidden = boolean;
 export interface Account {
   address: Address;
   name?: AccountName;
   description?: AccountDescription;
-  is_hidden?: AccountIsHidden;
+  hidden: Hidden;
   [k: string]: any;
 }
 export type Accounts = Account[];
+export type WalletName = string;
+export type WalletDescription = string;
+export type HdPath = string;
+export interface Wallet {
+  uuid: Uuid;
+  name?: WalletName;
+  description?: WalletDescription;
+  hdPath: HdPath;
+  hidden: Hidden;
+  [k: string]: any;
+}
+export type Wallets = Wallet[];
 export type AccountExists = boolean;
 export interface SignedTypedDataResult {
   signature: HexString;
@@ -161,8 +173,9 @@ export interface SignedTypedDataResult {
  * Generated! Represents an alias to any of the provided schemas
  *
  */
-export type AnyOfAddressAddressNewAccountTransactionPassphraseChainIdSignedTypedDataAddressPassphraseChainIdPassphraseKeyfileImportMnemonicOptionsAccountMnemonicOptionsAddressHexStringAddressPassphraseChainIdAccountsAccountExistsAccountExistsAddressHexStringSignedTypedDataResultAddressMnemonicStringDoaGddGAAddressKeyfileHexString = Address | NewAccount | Transaction | Passphrase | ChainId | SignedTypedData | Keyfile | ImportMnemonicOptions | AccountMnemonicOptions | HexString | Accounts | AccountExists | SignedTypedDataResult | Mnemonic | StringDoaGddGA;
-export type ListAccounts = () => Promise<Accounts>;
+export type AnyOfHiddenHiddenAddressAddressNewAccountTransactionPassphraseChainIdSignedTypedDataAddressPassphraseChainIdPassphraseKeyfileImportMnemonicOptionsAccountMnemonicOptionsAddressHexStringAddressPassphraseChainIdAccountsWalletsAccountExistsAccountExistsAddressHexStringSignedTypedDataResultAddressMnemonicStringDoaGddGAAddressKeyfileHexString = Hidden | Address | NewAccount | Transaction | Passphrase | ChainId | SignedTypedData | Keyfile | ImportMnemonicOptions | AccountMnemonicOptions | HexString | Accounts | Wallets | AccountExists | SignedTypedDataResult | Mnemonic | StringDoaGddGA;
+export type ListAccounts = (hidden?: Hidden) => Promise<Accounts>;
+export type ListWallets = (hidden?: Hidden) => Promise<Wallets>;
 export type HideAccount = (address: Address) => Promise<AccountExists>;
 export type UnhideAccount = (address: Address) => Promise<AccountExists>;
 export type CreateAccount = (newAccount: NewAccount) => Promise<Address>;
