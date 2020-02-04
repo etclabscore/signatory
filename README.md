@@ -11,7 +11,7 @@
   <p align="center">
     🔏A transaction and message signer for the Ethereum Stack
     <br />
-    <a href="https://expedition.dev">signatory.dev</a>
+    <a href="https://signatory.dev">signatory.dev</a>
     ·
     <a href="https://github.com/etclabscore/signatory/issues/new?assignees=&labels=&template=bug_report.md&title=">Report Bug</a>
     ·
