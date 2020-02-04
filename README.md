@@ -1,6 +1,25 @@
-# Signatory
+<h1 align="center" style="margin-top: 1em; margin-bottom: 3em;">
+  <p>
+  <a href="https://signatory.dev">
+    <img alt="open-rpc logo" src="https://user-images.githubusercontent.com/10556209/73570773-a07fb900-4432-11ea-8ed1-3bf525af04d9.png" alt="signatory.dev" width="125">
+  </a>
+</p>
 
-🔏A transaction and message signer for the Ethereum Stack.
+<center>
+  <h3 align="center">Signatory</h3>
+
+  <p align="center">
+    🔏A transaction and message signer for the Ethereum Stack
+    <br />
+    <a href="https://expedition.dev">signatory.dev</a>
+    ·
+    <a href="https://github.com/etclabscore/signatory/issues/new?assignees=&labels=&template=bug_report.md&title=">Report Bug</a>
+    ·
+    <a href="https://github.com/etclabscore/signatory/issues/new?assignees=&labels=&template=feature_request.md&title=">Request Feature</a>
+  </p>
+</center>
+</h1>
+
 
 [View The Documentation](https://signatory.dev/api-documentation)
 
