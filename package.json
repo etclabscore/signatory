@@ -25,6 +25,7 @@
     "@etclabscore/ethereumjs-wallet": "^1.0.4",
     "@open-rpc/client-js": "^1.2.3",
     "@open-rpc/generator-client": "^1.14.6",
+    "@open-rpc/semantic-release-plugin": "^1.0.2",
     "@open-rpc/server-js": "^1.5.2",
     "@open-rpc/typings": "^1.8.0",
     "@semantic-release/exec": "^5.0.0",
