@@ -35,7 +35,7 @@ export class RocksStorage implements Storage {
     });
   }
   public async getAccount(address: string): Promise<NonDeterministicWallet> {
-    let normalizedAddress = address.toLowerCase();
+    let normalizedAddress = ethUtil.toChecksumAddress(address);
     if (ethUtil.isZeroAddress(normalizedAddress)) {
       normalizedAddress = normalizedAddress.slice(2);
     }
@@ -56,7 +56,7 @@ export class RocksStorage implements Storage {
         await this.storeData(wallet.uuid.toLowerCase(), JSON.stringify(wallet));
         return wallet;
       case "non-deterministic":
-        await this.storeData(wallet.address.toLowerCase(), JSON.stringify(wallet));
+        await this.storeData(ethUtil.toChecksumAddress(wallet.address), JSON.stringify(wallet));
         return wallet;
     }
   }

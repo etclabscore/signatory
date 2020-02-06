@@ -83,7 +83,7 @@ export const getAccountFromHDWallet = (wallet: DeterministicWallet, passphrase: 
 
 export const createNonDeterministicWalletFromKeyfile = (passphrase: string, keyFile: V3Keystore): NonDeterministicWallet => {
   const wallet = Wallet.fromV3(keyFile, passphrase);
-  const address = wallet.getAddressString();
+  const address = wallet.getChecksumAddressString();
   return {
     type: "non-deterministic",
     keystore: keyFile,
@@ -98,7 +98,7 @@ export const createNonDeterministicWallet = (acctDesc: AccountData, parent: stri
   const privKey = acctDesc.privateKey ? acctDesc.privateKey : randomBytes(32);
   const wallet = new Wallet(privKey);
   const keystore = wallet.toV3(acctDesc.passphrase);
-  const address = wallet.getAddressString();
+  const address = wallet.getChecksumAddressString();
 
   return {
     type: "non-deterministic",

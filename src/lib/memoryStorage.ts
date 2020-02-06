@@ -1,5 +1,6 @@
 import { Storage, AccountStorageData, AccountMetadata } from "./storage";
 import { WalletType, DeterministicWallet, NonDeterministicWallet } from "./wallet";
+import * as ethUtil from "ethereumjs-util";
 export class MemoryStorage implements Storage {
   public storage: { [key: string]: string; };
 
@@ -16,7 +17,7 @@ export class MemoryStorage implements Storage {
   }
 
   public getAccount(address: string): Promise<NonDeterministicWallet> {
-    return Promise.resolve(JSON.parse(this.getEntry(address)) as NonDeterministicWallet);
+    return Promise.resolve(JSON.parse(this.getEntry(ethUtil.toChecksumAddress(address))) as NonDeterministicWallet);
   }
 
   public getHDWallet(uuid: string) {
@@ -30,7 +31,7 @@ export class MemoryStorage implements Storage {
         this.storage[wallet.uuid] = serializedWallet;
         break;
       case "non-deterministic":
-        this.storage[wallet.address] = serializedWallet;
+        this.storage[ethUtil.toChecksumAddress(wallet.address)] = serializedWallet;
         break;
     }
     return Promise.resolve(wallet);
