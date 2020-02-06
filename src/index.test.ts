@@ -125,10 +125,10 @@ describe("Integration test for signatory server", () => {
       gas: "0x1000000",
       gasPrice: "0x10",
       nonce: "0x01",
-    }, "testtest", 61);
+    }, "testtest", "0x3d");
     expect(signedTx).toBeDefined();
 
-    const signTypedData = await client.signTypedData(testTypedData, address, "testtest", 6);
+    const signTypedData = await client.signTypedData(testTypedData, address, "testtest", "0x6");
     expect(signTypedData.signature).toBeDefined();
     expect(signTypedData.encodedData).toBeDefined();
   }, 10000);

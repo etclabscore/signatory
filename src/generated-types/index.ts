@@ -67,7 +67,7 @@ export interface Transaction {
  *
  */
 export type Passphrase = string;
-export type ChainId = number;
+export type ChainId = string;
 export type StringDoaGddGA = string;
 export interface TypedData {
   name?: StringDoaGddGA;

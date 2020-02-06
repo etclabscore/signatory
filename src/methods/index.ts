@@ -111,23 +111,23 @@ export const methods = (storage: Storage): SignatoryMethodMapping => {
       return wallet.keystore as types.Keyfile;
     },
 
-    sign: async (dataToSign: string, address: string, passphrase: string, chainId: number) => {
+    sign: async (dataToSign: string, address: string, passphrase: string, chainId: types.ChainId) => {
       const wallet = await storage.getAccount(address);
       const acct = Wallet.fromV3(wallet.keystore, passphrase);
-      return personalSign(Buffer.from(dataToSign), acct.getPrivateKey(), chainId);
+      return personalSign(Buffer.from(dataToSign), acct.getPrivateKey(), parseInt(chainId, 16));
     },
 
-    signTransaction: async (transaction: types.Transaction, passphrase: string, chainId: number) => {
+    signTransaction: async (transaction: types.Transaction, passphrase: string, chainId: types.ChainId) => {
       const wallet = await storage.getAccount(transaction.from);
       const acct = Wallet.fromV3(wallet.keystore, passphrase);
       const privKey = acct.getPrivateKey();
-      return signTransaction(transaction, privKey, chainId);
+      return signTransaction(transaction, privKey, parseInt(chainId, 16));
     },
 
-    signTypedData: async (typedData: types.TypedData, address: types.Address, passphrase: types.Passphrase, chainId: number) => {
+    signTypedData: async (typedData: types.TypedData, address: types.Address, passphrase: types.Passphrase, chainId: types.ChainId) => {
       const wallet = await storage.getAccount(address);
       const acct = Wallet.fromV3(wallet.keystore, passphrase);
-      const { signature, data } = signTypedData(typedData, acct.getPrivateKey(), chainId);
+      const { signature, data } = signTypedData(typedData, acct.getPrivateKey(), parseInt(chainId, 16));
       return { signature, encodedData: data };
     },
 
