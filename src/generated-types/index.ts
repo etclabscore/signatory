@@ -57,7 +57,7 @@ export interface Transaction {
   gasPrice: GasPrice;
   data?: Data;
   nonce: Nonce;
-  to: Address;
+  to?: Address;
   value?: Wei;
   [k: string]: any;
 }
