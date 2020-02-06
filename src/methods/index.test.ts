@@ -107,15 +107,17 @@ describe("Methods for handling signatory request", () => {
   });
 
   it("should sign data", async () => {
-    const signature = await handlers.sign("hello world", dummyAccount.address, "testtest", 61);
-    const pubKey = sign.recoverPublicKeyFromSig(Buffer.from("hello world"), signature, 61);
+    const chainId = 61;
+    const signature = await handlers.sign("hello world", dummyAccount.address, "testtest", "0x" + chainId.toString(16));
+    const pubKey = sign.recoverPublicKeyFromSig(Buffer.from("hello world"), signature, chainId);
     const address = "0x" + util.keccak256(pubKey).slice(-20).toString("hex");
     expect(address).toEqual(dummyAccount.address);
   });
 
   it("should sign typed Data", async () => {
-    const { signature, encodedData } = await handlers.signTypedData(typedData, dummyAccount.address, "testtest", 61);
-    const pubKey = sign.recoverPublicKeyFromTypedData(Buffer.from(encodedData, "hex"), signature, 61);
+    const chainId = 61;
+    const { signature, encodedData } = await handlers.signTypedData(typedData, dummyAccount.address, "testtest", "0x" + chainId.toString(16));
+    const pubKey = sign.recoverPublicKeyFromTypedData(Buffer.from(encodedData, "hex"), signature, chainId);
     const address = "0x" + util.keccak256(pubKey).slice(-20).toString("hex");
     expect(address).toEqual(dummyAccount.address);
   });
@@ -131,17 +133,18 @@ describe("Methods for handling signatory request", () => {
       value: "0x1000000",
     };
 
-    const rlpEncodedData = await handlers.signTransaction(transaction, "testtest", 61);
+    const chainId = 61;
+    const rlpEncodedData = await handlers.signTransaction(transaction, "testtest", `0x${chainId.toString(16)}`);
     let rawData = rlp.decode(rlpEncodedData) as Buffer[];
     rawData = rawData.slice(6);
     // v,r,s
     const serialized = util.bufferToHex(sigUtil.concatSig(rawData[0], rawData[1], rawData[2]));
 
-    const customChainParams = { name: "custom", chainId: 61 };
+    const customChainParams = { name: "custom", chainId };
     const common = ethCommon.forCustomChain(1, customChainParams, "byzantium");
     const tx = new ethTx.Transaction(transaction, { common });
     const signedData = tx.hash(false);
-    const pubKey = sign.recoverPublicKeyFromSigWithoutPersonal(signedData, serialized, 61);
+    const pubKey = sign.recoverPublicKeyFromSigWithoutPersonal(signedData, serialized, chainId);
     const address = "0x" + util.keccak256(pubKey).slice(-20).toString("hex");
     expect(address).toEqual(dummyAccount.address);
 

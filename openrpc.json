@@ -219,6 +219,8 @@
         {
           "name": "chainId",
           "required": true,
+          "description": "chainId for tthe signed type data transaction",
+          "summary": "transaction chainId",
           "schema": {
             "$ref": "#/components/schemas/ChainId"
           }
@@ -485,7 +487,7 @@
             },
             {
               "name": "chainId",
-              "value": 61
+              "value": "0x3d"
             }
           ],
           "result": {
@@ -507,25 +509,6 @@
         "title": "address",
         "type": "string",
         "pattern": "^0x[a-fA-F\\d]{40}$"
-      },
-      "Additional": {
-        "title": "additionalParams",
-        "type": "object",
-        "properties": {
-          "chainId": {
-            "title": "chainId",
-            "description": "Chain id number, by default for mainnet it equals 61.",
-            "type": "integer"
-          },
-          "show_hidden": {
-            "title": "showHidden",
-            "description": "show hidden accounts",
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "chainId"
-        ]
       },
       "Account": {
         "title": "Account",
@@ -560,7 +543,8 @@
       },
       "ChainId": {
         "title": "chainId",
-        "type": "integer"
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]+$"
       },
       "HexString": {
         "title": "hexString",
@@ -827,14 +811,6 @@
           "$ref": "#/components/schemas/Address"
         }
       },
-      "Additional": {
-        "name": "additional",
-        "summary": "additional params",
-        "description": "additional list of parameters to define network or account specific options",
-        "schema": {
-          "$ref": "#/components/schemas/Additional"
-        }
-      },
       "Hidden": {
         "name": "hidden",
         "summary": "visible flag parameter",
@@ -859,6 +835,14 @@
         "description": "passphrase to unlock keyfile storage",
         "schema": {
           "$ref": "#/components/schemas/Passphrase"
+        }
+      },
+      "ChainId": {
+        "name": "chainId",
+        "summary": "Chain Idenifier for blockchain",
+        "description": "Specifies which chain to utilize",
+        "schema": {
+          "$ref": "#/components/schemas/ChainId"
         }
       },
       "UUID": {
