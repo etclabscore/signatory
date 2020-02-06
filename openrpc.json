@@ -237,7 +237,7 @@
               "$ref": "#/components/schemas/HexString"
             },
             "encodedData": {
-              "type": "string"
+              "$ref": "#/components/schemas/HexString"
             }
           },
           "required": [
@@ -245,7 +245,111 @@
             "encodedData"
           ]
         }
-      }
+      },
+      "examples": [
+        {
+          "name": "signedTypeDataExample",
+          "description": "A signedTypedData Example",
+          "params": [
+            {
+              "name": "signedTypedData",
+              "description": "SignedTypedData object",
+              "summary": "Example signed typed data payload",
+              "value": {
+                "types": {
+                  "EIP712Domain": [
+                    {
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "name": "version",
+                      "type": "string"
+                    },
+                    {
+                      "name": "chainId",
+                      "type": "uint256"
+                    },
+                    {
+                      "name": "verifyingContract",
+                      "type": "address"
+                    }
+                  ],
+                  "Person": [
+                    {
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "name": "wallet",
+                      "type": "address"
+                    }
+                  ],
+                  "Mail": [
+                    {
+                      "name": "from",
+                      "type": "Person"
+                    },
+                    {
+                      "name": "to",
+                      "type": "Person"
+                    },
+                    {
+                      "name": "contents",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "primaryType": "Mail",
+                "domain": {
+                  "name": "Ether Mail",
+                  "version": "1",
+                  "chainId": 1,
+                  "verifyingContract": "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"
+                },
+                "message": {
+                  "from": {
+                    "name": "Cow",
+                    "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"
+                  },
+                  "to": {
+                    "name": "Bob",
+                    "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB"
+                  },
+                  "contents": "Hello, Bob!"
+                }
+              }
+            },
+            {
+              "name": "address",
+              "description": "Sender address",
+              "summary": "Address to send sign typed data from",
+              "value": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"
+            },
+            {
+              "name": "passphrase",
+              "description": "Passphrase",
+              "summary": "Passphrase to unlock account",
+              "value": "baz"
+            },
+            {
+              "name": "chainId",
+              "description": "chainId for transaction",
+              "summary": "chainId to sign the data with",
+              "value": "0x6"
+            }
+          ],
+          "result": {
+            "name": "signedTypedDataExampleResult",
+            "description": "An example result of the signedTyped Data",
+            "summary": "Demonstrates the return format of example",
+            "value": {
+              "signature": "0x4355c47d63924e8a72e509b65029052eb6c299d53a04e167c5775fd466751c9d07299936d304c153f6443dfa05f40ff007d72911b6f72307f996231605b9156226",
+              "encodedData": "0xbe609aee343fb3c4b28e1df9e632fca64fcfaede20f02e86244efddf30957bd2"
+            }
+          }
+        }
+      ]
     },
     {
       "name": "importKeyfile",

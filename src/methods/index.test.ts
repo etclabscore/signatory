@@ -117,7 +117,8 @@ describe("Methods for handling signatory request", () => {
   it("should sign typed Data", async () => {
     const chainId = 61;
     const { signature, encodedData } = await handlers.signTypedData(typedData, dummyAccount.address, "testtest", "0x" + chainId.toString(16));
-    const pubKey = sign.recoverPublicKeyFromTypedData(Buffer.from(encodedData, "hex"), signature, chainId);
+    const data = encodedData.slice(2);
+    const pubKey = sign.recoverPublicKeyFromTypedData(Buffer.from(data, "hex"), signature, chainId);
     const address = "0x" + util.keccak256(pubKey).slice(-20).toString("hex");
     expect(address).toEqual(dummyAccount.address);
   });
