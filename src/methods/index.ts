@@ -128,7 +128,7 @@ export const methods = (storage: Storage): SignatoryMethodMapping => {
       const wallet = await storage.getAccount(address);
       const acct = Wallet.fromV3(wallet.keystore, passphrase);
       const { signature, data } = signTypedData(typedData, acct.getPrivateKey(), parseInt(chainId, 16));
-      return { signature, encodedData: data };
+      return { signature, encodedData: "0x" + data.toString("hex") };
     },
 
   };

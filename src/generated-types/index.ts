@@ -165,7 +165,7 @@ export type Wallets = Wallet[];
 export type AccountExists = boolean;
 export interface SignedTypedDataResult {
   signature: HexString;
-  encodedData: StringDoaGddGA;
+  encodedData: HexString;
   [k: string]: any;
 }
 /**
