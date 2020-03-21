@@ -99,7 +99,7 @@ export const methods = (storage: Storage): SignatoryMethodMapping => {
     },
 
     importMnemonic: async (options: types.ImportMnemonicOptions) => {
-      const seed = await bip39.mnemonicToSeed(options.mnemonic);
+      const seed = await bip39.mnemonicToSeed(options.mnemonic, options.passphrase);
       const wallet = account.createDeterministicWallet(options.passphrase, seed, options.hdPath);
       await storage.storeAccount(wallet);
       return wallet.uuid;
