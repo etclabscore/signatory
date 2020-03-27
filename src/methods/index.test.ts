@@ -109,8 +109,9 @@ describe("Methods for handling signatory request", () => {
 
   it("should sign data", async () => {
     const chainId = 61;
-    const signature = await handlers.sign(stringToHex("hello world"), dummyAccount.address, "testtest", numberToHex(chainId));
-    const pubKey = sign.recoverPublicKeyFromSig(Buffer.from("hello world"), signature, chainId);
+    const msg = stringToHex("hello world");
+    const signature = await handlers.sign(msg, dummyAccount.address, "testtest", numberToHex(chainId));
+    const pubKey = sign.recoverPublicKeyFromSig(Buffer.from(msg), signature, chainId);
     const address = "0x" + util.keccak256(pubKey).slice(-20).toString("hex");
     expect(address).toEqual(dummyAccount.address);
   });

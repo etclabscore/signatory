@@ -3,7 +3,7 @@
  */
 import { makeLogger } from "../lib/logging";
 import { IMethodMapping } from "@open-rpc/server-js/build/router";
-import { hexToString, hexToNumber } from "@etclabscore/eserialize";
+import { hexToNumber } from "@etclabscore/eserialize";
 import * as types from "../generated-types";
 import { Storage } from "../lib/storage";
 import { createNonDeterministicWallet, AccountInfo, WalletInfo } from "../lib/wallet";
@@ -115,7 +115,7 @@ export const methods = (storage: Storage): SignatoryMethodMapping => {
     sign: async (dataToSign: string, address: string, passphrase: string, chainId: types.ChainId) => {
       const wallet = await storage.getAccount(address);
       const acct = Wallet.fromV3(wallet.keystore, passphrase);
-      return personalSign(Buffer.from(hexToString(dataToSign)), acct.getPrivateKey(), hexToNumber(chainId));
+      return personalSign(Buffer.from(dataToSign), acct.getPrivateKey(), hexToNumber(chainId));
     },
 
     signTransaction: async (transaction: types.Transaction, passphrase: string, chainId: types.ChainId) => {
