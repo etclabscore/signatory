@@ -9,3 +9,4 @@ dist
 fixtures/generated-clients
 generated-client/
 signatory/
+test-signatory*

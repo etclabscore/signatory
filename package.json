@@ -22,6 +22,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@etclabscore/eserialize": "^1.0.2",
     "@etclabscore/ethereumjs-wallet": "^1.0.4",
     "@open-rpc/client-js": "^1.2.3",
     "@open-rpc/generator-client": "^1.14.6",
