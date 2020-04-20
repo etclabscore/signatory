@@ -106,12 +106,7 @@
                 "type": "string"
               },
               "passphrase": {
-                "name": "passphrase",
-                "description": "passphrase to keyfile",
-                "summary": "keyfile passphrase",
-                "schema": {
-                  "$ref": "#/components/schemas/Passphrase"
-                }
+                "$ref": "#/components/schemas/Passphrase"
               }
             },
             "required": [
