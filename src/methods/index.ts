@@ -2,7 +2,7 @@
  * This handles the routing for the RPC server, exposing the methods that the server handles
  */
 import { makeLogger } from "../lib/logging";
-import { IMethodMapping } from "@open-rpc/server-js/build/router";
+import { MethodMapping } from "@open-rpc/server-js/build/router";
 import { hexToNumber } from "@etclabscore/eserialize";
 import * as types from "../generated-types";
 import { Storage } from "../lib/storage";
@@ -14,7 +14,7 @@ import { personalSign, signTransaction, signTypedData } from "../lib/sign";
 
 const logger = makeLogger("Signatory", "Methods");
 
-export interface SignatoryMethodMapping extends IMethodMapping {
+export interface SignatoryMethodMapping extends MethodMapping {
   listAccounts: types.ListAccounts;
   listWallets: types.ListWallets;
   createAccount: types.CreateAccount;
