@@ -112,8 +112,7 @@
             "required": [
               "passphrase"
             ]
-          },
-          "required": true
+          }
         }
       ],
       "result": {
@@ -148,14 +147,12 @@
           "name": "transaction",
           "description": "transaction to sign",
           "summary": "transaction",
-          "required": true,
           "schema": {
             "$ref": "#/components/schemas/Transaction"
           }
         },
         {
           "name": "passphrase",
-          "required": true,
           "description": "passphrase to keyfile",
           "summary": "keyfile passphrase",
           "schema": {
@@ -188,7 +185,6 @@
           "name": "typedData",
           "description": "typedData to sign",
           "summary": "EIP 712 TypedData",
-          "required": true,
           "schema": {
             "$ref": "#/components/schemas/SignedTypedData"
           }
@@ -197,14 +193,12 @@
           "name": "address",
           "description": "address to send transaction to",
           "summary": "Address to send transaction from",
-          "required": true,
           "schema": {
             "$ref": "#/components/schemas/Address"
           }
         },
         {
           "name": "passphrase",
-          "required": true,
           "description": "passphrase to keyfile",
           "summary": "keyfile passphrase",
           "schema": {
@@ -213,7 +207,6 @@
         },
         {
           "name": "chainId",
-          "required": true,
           "description": "chainId for tthe signed type data transaction",
           "summary": "transaction chainId",
           "schema": {
@@ -381,7 +374,6 @@
       "description": "Creates a new account from a mnemonic and stores it locally as a passphrase-encoded keystore file.",
       "params": [
         {
-          "required": true,
           "name": "importMnemonicOptions",
           "schema": {
             "title": "importMnemonicOptions",
@@ -453,7 +445,6 @@
         {
           "name": "accountFromMnemonicOptions",
           "description": "mnemonic account generation options",
-          "required": true,
           "schema": {
             "title": "AccountMnemonicOptions",
             "type": "object",
@@ -533,12 +524,10 @@
           "summary": "sign data",
           "schema": {
             "$ref": "#/components/schemas/HexString"
-          },
-          "required": true
+          }
         },
         {
           "name": "address",
-          "required": true,
           "schema": {
             "$ref": "#/components/schemas/Address"
           }
@@ -548,12 +537,10 @@
           "description": "passphrase to keyfile",
           "schema": {
             "$ref": "#/components/schemas/Passphrase"
-          },
-          "required": true
+          }
         },
         {
           "name": "chainId",
-          "required": true,
           "description": "chain id for the transaction",
           "summary": "chain id for the transaction",
           "schema": {
@@ -904,7 +891,6 @@
       "Address": {
         "name": "address",
         "summary": "Account address",
-        "required": true,
         "description": "hex-encoded 20 bytes public address",
         "schema": {
           "$ref": "#/components/schemas/Address"
@@ -914,13 +900,13 @@
         "name": "hidden",
         "summary": "visible flag parameter",
         "description": "A parameter to hide or show an account or feature",
+        "required": false,
         "schema": {
           "$ref": "#/components/schemas/Hidden"
         }
       },
       "Keyfile": {
         "name": "keyfile",
-        "required": true,
         "summary": "keyfile - secret storage",
         "description": "keyfile in json format that MUST comply with the [Web3 Secret Storage Definition](https://github.com/ethereumproject/wiki/wiki/Web3-Secret-Storage-Definition)",
         "schema": {
@@ -929,7 +915,6 @@
       },
       "Passphrase": {
         "name": "passphrase",
-        "required": true,
         "summary": "keyfile - passphrase",
         "description": "passphrase to unlock keyfile storage",
         "schema": {
@@ -947,7 +932,6 @@
       "UUID": {
         "name": "uuid",
         "summary": "UUIDv4 idenitifer for wallet",
-        "required": true,
         "description": "UUIDv4 identifier for HD wallet",
         "schema": {
           "$ref": "#/components/schemas/UUID"

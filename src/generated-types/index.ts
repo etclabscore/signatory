@@ -1,5 +1,3 @@
-export type Hidden = boolean;
-export type Address = string;
 export type AccountName = string;
 export type AccountDescription = string;
 /**
@@ -10,17 +8,11 @@ export type AccountDescription = string;
 export type PrivateKey = string;
 /**
  *
- * passphrase to keyfile
+ * passphrase used to encode keyfile (recommend to use 8+ words with good entropy)
  *
  */
-export type AnySGkEczp1 = any;
-export interface NewAccount {
-  name?: AccountName;
-  description?: AccountDescription;
-  privateKey?: PrivateKey;
-  passphrase: AnySGkEczp1;
-  [k: string]: any;
-}
+export type Passphrase = string;
+export type Address = string;
 /**
  *
  * The gas limit provided by the sender in Wei
@@ -51,23 +43,6 @@ export type Nonce = string;
  *
  */
 export type Wei = string;
-export interface Transaction {
-  from: Address;
-  gas: Gas;
-  gasPrice: GasPrice;
-  data?: Data;
-  nonce: Nonce;
-  to?: Address;
-  value?: Wei;
-  [k: string]: any;
-}
-/**
- *
- * passphrase used to encode keyfile (recommend to use 8+ words with good entropy)
- *
- */
-export type Passphrase = string;
-export type ChainId = string;
 export type StringDoaGddGA = string;
 export interface TypedData {
   name?: StringDoaGddGA;
@@ -75,17 +50,12 @@ export interface TypedData {
   [k: string]: any;
 }
 export type Eip712Domain = TypedData[];
+export type UnorderedSetOfTypedData6EBia985 = TypedData[];
 export interface Types {
   EIP712Domain: Eip712Domain;
-}
-export interface ObjectHAgrRKSz { [key: string]: any; }
-export interface SignedTypedData {
-  types: Types;
-  primaryType: StringDoaGddGA;
-  domain: ObjectHAgrRKSz;
-  message: ObjectHAgrRKSz;
   [k: string]: any;
 }
+export interface ObjectHAgrRKSz { [key: string]: any; }
 export type Integer2AHOqbcQ = number;
 export type Iv = string;
 export interface ObjectOfIv0Y2C7QDo {
@@ -110,12 +80,6 @@ export interface Crypto {
   mac: StringDoaGddGA;
   [k: string]: any;
 }
-export interface Keyfile {
-  version: Integer2AHOqbcQ;
-  id: StringDoaGddGA;
-  crypto: Crypto;
-  [k: string]: any;
-}
 /**
  *
  * a list of 24 words
@@ -125,23 +89,9 @@ export type Mnemonic = string;
 export type MnemonicName = string;
 export type MnemonicDescription = string;
 export type MnemonicHDPath = string;
-export interface ImportMnemonicOptions {
-  mnemonic: Mnemonic;
-  name?: MnemonicName;
-  description?: MnemonicDescription;
-  passphrase: Passphrase;
-  hdPath: MnemonicHDPath;
-  [k: string]: any;
-}
 export type Uuid = string;
 export type Index = any;
-export interface AccountMnemonicOptions {
-  uuid: Uuid;
-  passphrase: Passphrase;
-  index?: Index;
-  [k: string]: any;
-}
-export type HexString = string;
+export type Hidden = boolean;
 export interface Account {
   address: Address;
   name?: AccountName;
@@ -149,7 +99,6 @@ export interface Account {
   hidden: Hidden;
   [k: string]: any;
 }
-export type Accounts = Account[];
 export type WalletName = string;
 export type WalletDescription = string;
 export type HdPath = string;
@@ -161,6 +110,53 @@ export interface Wallet {
   hidden: Hidden;
   [k: string]: any;
 }
+export type HexString = string;
+export interface NewAccount {
+  name?: AccountName;
+  description?: AccountDescription;
+  privateKey?: PrivateKey;
+  passphrase: Passphrase;
+  [k: string]: any;
+}
+export interface Transaction {
+  from: Address;
+  gas: Gas;
+  gasPrice: GasPrice;
+  data?: Data;
+  nonce: Nonce;
+  to?: Address;
+  value?: Wei;
+  [k: string]: any;
+}
+export type ChainId = string;
+export interface SignedTypedData {
+  types: Types;
+  primaryType: StringDoaGddGA;
+  domain: ObjectHAgrRKSz;
+  message: ObjectHAgrRKSz;
+  [k: string]: any;
+}
+export interface Keyfile {
+  version: Integer2AHOqbcQ;
+  id: StringDoaGddGA;
+  crypto: Crypto;
+  [k: string]: any;
+}
+export interface ImportMnemonicOptions {
+  mnemonic: Mnemonic;
+  name?: MnemonicName;
+  description?: MnemonicDescription;
+  passphrase: Passphrase;
+  hdPath: MnemonicHDPath;
+  [k: string]: any;
+}
+export interface AccountMnemonicOptions {
+  uuid: Uuid;
+  passphrase: Passphrase;
+  index?: Index;
+  [k: string]: any;
+}
+export type Accounts = Account[];
 export type Wallets = Wallet[];
 export type AccountExists = boolean;
 export interface SignedTypedDataResult {

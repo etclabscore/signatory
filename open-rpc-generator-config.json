@@ -1,0 +1,11 @@
+{
+    "openrpcDocument": "openrpc.json",
+    "outDir": "generated-client",
+    "components": [
+        {
+            "type": "client",
+            "name": "@etclabscore/signatory-client",
+            "language": "typescript"
+        }
+    ]
+}
